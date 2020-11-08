@@ -1,0 +1,39 @@
+
+import asyncio,requests
+
+
+async def find_divisibles():
+	located = []
+	for x in range(1,100):
+		r=requests.get("https://jsonplaceholder.typicode.com/todos/77")
+
+		await asyncio.sleep(0.0001)
+		located.append(x)
+
+
+		print(r)
+
+	return located
+
+
+
+
+async def main():
+    divs1 = loop.create_task(find_divisibles())
+    divs2 = loop.create_task(find_divisibles())
+    divs3 = loop.create_task(find_divisibles())
+    await asyncio.wait([divs1,divs2,divs3])
+    return divs1, divs2, divs3
+
+
+if __name__ == "__main__":
+    try:
+        loop = asyncio.get_event_loop()
+        loop.set_debug(1)
+        d1, d2, d3 = loop.run_until_complete(main())
+        print(d1.result())
+    except Exception as e:
+        # logging...etc
+        pass
+    finally:
+        loop.close()
